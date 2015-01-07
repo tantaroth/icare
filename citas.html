@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>Title Test</title>
+    </head>
+    <body>
+        <form id="form" method="post" accept-charset="utf-8">
+            <fieldset>
+                <legend><span>Citas</span></legend>
+                <div>
+                    <label for="dcts">Doctores</label><br />
+                    <select name="dcts" id="dcts">
+                        <option value="-xddjdhd">Benito Algo</option>
+                        <option value="-xddjdor">Rubelino Otro</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="office">Consultorios</label><br />
+                    <select name="office" id="office">
+                        <option value="-xaiaoisd">Consultorio 1</option>
+                        <option value="-xairtisd">Consultorio 2</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="ptns">Pacientes</label><br />
+                    <select name="ptns" id="ptns">
+                        <option value="-xddjptn">Lilit G.</option>
+                    </select>
+                </div>
+                <hr />
+                <div>
+                    <label for="name">Nombre</label><br /><input type="text" name="name" id="name" placeholder="Nombre.." />
+                </div>
+                <div>
+                    <label for="phone">Teléfono</label><br /><input type="phone" name="phone" id="phone" placeholder="Teléfono.." /> <button id="addPhone" type="button">Agregar</button>
+                </div>
+                <div>
+                    <label for="mobile">Celular</label><br /><input type="phone" name="mobile" id="mobile" placeholder="Celular.." /> <button id="addMobile" type="button">Agregar</button>
+                </div>
+                <div>
+                    <label for="address">Dirección</label><br /><input type="address" name="address" id="address" placeholder="Dirección.." />
+                </div>
+                <div>
+                    <label for="rcts">Recepcionista</label><br />
+                    <select name="rcts" id="rcts">
+                        <option value="-xlkljlksd">Lul Banb</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="geo">Fotos</label><br />
+                    <input type="text" name="findGeo" id="findGeo" /><br />
+                    <img id="googleMaps" src="googleMaps" alt="Google Maps" />
+                    <input type="hidden" name="geo" id="geo" value="current_geo_google_maps_latlon" />
+                </div>
+                <div>
+                    <label for="photos">Fotos</label><br />
+                    <input type="file" name="photos" id="photos" /> <button id="addPhoto" type="button">Agregar</button>
+                </div>
+                <hr />
+                <div>
+                    <button id="save" type="submit">Guardar</button>
+                </div>
+            </fieldset>
+        </form>
+    </body>
+</html>
