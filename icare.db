@@ -1,224 +1,216 @@
 {
-	users:{
-		dcts:{
-			"-xddjdhd": {
-				firstName: "Benito",
-				lastName: "Algo",
-				documenType: "-xrietouer",
-				documentNumber: 1231221321,
-				email: "benito@mail.c",
-				password: "87asd78asd876sa678d87",
-				bornDate: "14-12-1983",
-				gender: "-xeiruroop",
-				maritalStatus: "-xierururu",
-				services: ["-xiiroeire", "-xiirfdyud"],
-				lang: ["-xiririroo"],
-				bio: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui voluptas quasi aliquid quibusdam unde ipsum nesciunt repellat tempora, quaerat sequi eveniet commodi laboriosam, eligendi facilis. Ut, dignissimos, fugiat! Iusto, quos.",
-				prizePublish: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis vel delectus architecto doloribus, vero aliquid officiis accusamus fuga, a soluta inventore, eveniet consectetur. Natus quia corporis impedit eaque eius, quod.",
-				memberships: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perspiciatis sequi, voluptas animi porro, nesciunt voluptatem totam assumenda excepturi sunt, repellat praesentium ex harum. Aperiam inventore earum, voluptatum eligendi autem reprehenderit.",
-				universities: "-xuurroror",
-				offices: {
-					"-xaiaoisd": {
-						name: "Consultorio 1",
-						phone: 98898989,
-						mobile: 2212939393,
-						address: "Cll sdasdas 123",
-						receptionist: "-xlkljlksd",
-						geo: "12312321,5435345",
-						photos: ["photo1.png", "photo2.png"]
-					}
-				},
-				chat: {
-					dcts: {
-						"-xddjdor": {
-							"-xddjdhd": "hola",
-							"-xddjdor": "hola.."
-						}
-					}
-				}
-			},
-			"-xddjdor": {
-				firstName: "Rubelino",
-				lastName: "Otro",
-				documenType: "-xrietouer",
-				documentNumber: 646554545,
-				email: "rubelino@mail.c",
-				password: "87asd78asd876sa678d87",
-				bornDate: "27-09-1971",
-				gender: "-xeiruroop",
-				maritalStatus: "-xierururu",
-				lang: ["-xiririroo", "-xeefriroo"],
-				bio: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui voluptas quasi aliquid quibusdam unde ipsum nesciunt repellat tempora, quaerat sequi eveniet commodi laboriosam, eligendi facilis. Ut, dignissimos, fugiat! Iusto, quos.",
-				prizePublish: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis vel delectus architecto doloribus, vero aliquid officiis accusamus fuga, a soluta inventore, eveniet consectetur. Natus quia corporis impedit eaque eius, quod.",
-				memberships: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perspiciatis sequi, voluptas animi porro, nesciunt voluptatem totam assumenda excepturi sunt, repellat praesentium ex harum. Aperiam inventore earum, voluptatum eligendi autem reprehenderit.",
-				certifications: "-xuurroror",
-				services: "-xiirfdyud",
-				offices: {
-					"-xairtisd": {
-						name: "Consultorio 2",
-						phone: 98898989,
-						mobile: 2212939393,
-						address: "Cll sdasdas 123",
-						receptionist: "-xlkljlksd",
-						geo: "12312451,6785345",
-						photos: ["photo1.png", "photo2.png"],
-						HoursOperation: {
-							"14-09-2015": {
-								startTime: "09:00:00",
-								endTime: "17:00:00"
-							}
-						}
-					}
-				},
-				schedules: {
-					"-xoiewrew": {
-						ptns: "-xddjptn",
-						guardian: "mama",
-						office: "-xaiaoisd",
-						medicalEntity: "-xoroeiiri",
-						carnet: "98ads879a78d",
-						subject: "dolor de cabeza",
-						date: "14-09-2015",
-						time: "10:30:00",
-						medio: "-xjhfghjdf"
-					}
-				},
-				chat: {
-					dcts: {
-						"-xddjdhd": {
-							"-xddjdhd": "hola",
-							"-xddjdor": "hola.."
-						}
-					},
-					ptns: {
-						"-xddjptn": {
-							"-xddjdor": "Hola",
-							"-xddjdor": "Como esta?",
-							"-xddjptn": "hola, bien.."
-						}
-					}
-				}
-			}
-		},
-		ptns:{
-			"-xddjptn": {
-				firstName: "Lilit",
-				lastName: "G.",
-				documenType: "-xrietouer",
-				documentNumber: 5464564565,
-				email: "lilit@mail.c",
-				password: "87asd78asd876sa678d87",
-				bornDate: "27-09-1974",
-				gender: "-xeiruroop",
-				phone: 988987989,
-				mobile: 3212939393,
-				job: "-xirruiuri",
-				maritalStatus: "-xierururu",
-				chat: {
-					ptns: {
-						"-xddjdor": {
-							"-xddjdor": "Hola",
-							"-xddjdor": "Como esta?",
-							"-xddjptn": "hola, bien.."
-						}
-					}
-				}
-			}
-		},
-		rcts: {
-			"-xlkljlksd": {
-				firstName: "Lul",
-				lastName: "Banb",
-				documenType: "-xrietouer",
-				documentNumber: 1231221321,
-				email: "lul@mail.c",
-				password: "87asd78asd876sa678d87",
-				gender: "-xuiirrio",
-				schedules: {
-					"-xoiewrew": {
-						ptns: "-xddjptn",
-						dcts: "-xddjdor",
-						office: "-xaiaoisd",
-						medicalEntity: "-xoroeiiri",
-						carnet: "98ads879a78d",
-						subject: "dolor de cabeza",
-						date: "14-09-2015",
-						time: "10:30:00",
-						medio: "-xjhfghjdf"
-					}
-				},
-			}
-		}
-	},
-	medios: {
-		"-xjhfghjdf": {
+    status: {
+        "-treqwv": {
+            name: "Activo"
+    },
+    role: {
+        "-asdeeq": {
+            name: "Dr",
+            status: "-treqwv"
+        },
+        "-asdewr": {
+            name: "Patient",
+            status: "-treqwv"
+        }
+        "-asdytr": {
+            name: "Recepcionista",
+            status: "-treqwv"
+        }
+    },
+    docType: {
+        "-ytrads": {
+            name: "C.C.",
+            status: "-treqwv"
+        }
+    },
+    gender: {
+        "-poiasd": {
+            name: "Masculino",
+            status: "-treqwv"
+        },
+        "-poiwer": {
+            name: "Femenino",
+            status: "-treqwv"
+        }
+    },
+    maritalStatus: {
+        "-xcvwer": {
+            name: "Casado/a",
+            status: "-treqwv"
+        },
+        "-xcvasd": {
+            name: "Soltero/a",
+            status: "-treqwv"
+        }
+    },
+    lang: {
+        "-cvbdsf": {
+            name: "Español",
+            es: "Español",
+            en: "Spanish",
+            status: "-treqwv"
+        },
+        "-cvbwer": {
+            name: "English",
+            es: "Inglés",
+            en: "English",
+            status: "-treqwv"
+        }
+    },
+    university: {
+        "-lkjasd": {
+            name: "Universidad Nacional",
+            status: "-treqwv"
+        }
+    },
+    service: {
+        "-hjgqwe": {
+            name: "Serv 1",
+            status: "-treqwv"
+        },
+        "-hjgasd": {
+            name: "Serv 2",
+            status: "-treqwv"
+        }
+    },
+	medio: {
+		"-xjhfgh": {
 			name: "virtual"
 		},
-		"-xjhfsajds": {
+		"-xjhfsa": {
 			name: "Presencial"
 		}
 	},
-	documenTypes: {
-		"-xrietouer": {
-			name: "C.C."
-		}
-	},
-	scheduleTypes: {
-		"-xrurjfjfu": {
-			name: "Control"
-		},
-		"-xrueeyefu": {
-			name: "Urgencia"
-		},
-		"-xoteuiek": {
-			name: "Postoperatorio"
-		}
-	},
-	universities: {
-		"-xuurroror": {
-			name: "Universidad Nacional"
-		}
-	},
-	medicalEntities: {
-		"-xoroeiiri": {
+	medicalEntity: {
+		"-xoroei": {
 			name: "Salud Total"
 		}
 	},
-	languages: {
-		"-xiririroo":{
-			name: "EspaÃ±ol"
-		}
-		"-xeefriroo":{
-			name: "English"
+	job: {
+		"-xirrui": {
+			name: "Empleado/a"
 		},
-	},
-	maritalStatuses:{
-		"-xierururu": {
-			name: "Soltero"
+		"-xriirr": {
+			name: "Desempleado/a"
 		}
 	},
-	jobs: {
-		"-xirruiuri": {
-			name: "Empleado"
-		},
-		"-xriirroio": {
-			name: "Desempleado"
-		}
-	},
-	genders:{
-		"-xeiruroop": {
-			name: "Masculino"
-		},
-		"-xuiirrio": {
-			name: "Femenino"
-		}
-	},
-	services: {
-		"-xiiroeire": {
-			name: "Serv 1"
-		},
-		"-xiirfdyud": {
-			name: "Serv 2"
-		}
-	}
+    user:{
+        "-xasdsa": {
+            role: "-asdeeq",
+			firstName: "Rubelino",
+			lastName: "Otro",
+            status: "-treqwv",
+            docType: "-ytrads",
+            docNum: 1231321321,
+			email: "rubelino@mail.c",
+			password: "87asd78asd876sa678d87",
+		    bornDate: "27-09-1971",
+		    gender: "-poiasd",
+		    maritalStatus: "-xcvwer",
+		    lang: ["-cvbdsf", "-cvbwer"],
+			bio: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui voluptas quasi aliquid quibusdam unde ipsum nesciunt repellat tempora, quaerat sequi eveniet commodi laboriosam, eligendi facilis. Ut, dignissimos, fugiat! Iusto, quos.",
+			prizePublish: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis vel delectus architecto doloribus, vero aliquid officiis accusamus fuga, a soluta inventore, eveniet consectetur. Natus quia corporis impedit eaque eius, quod.",
+			memberships: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perspiciatis sequi, voluptas animi porro, nesciunt voluptatem totam assumenda excepturi sunt, repellat praesentium ex harum. Aperiam inventore earum, voluptatum eligendi autem reprehenderit.",
+			university: "-lkjasd",
+			service: "-hjgqwe",
+			offices: {
+				"-xairti": {
+					name: "Consultorio 1",
+					phone: 98898989,
+					mobile: 2212939393,
+					address: "Cll sdasdas 123",
+					receptionist: "-xlkljlksd",
+					geo: "12312451,6785345",
+					photos: ["photo1.png", "photo2.png"],
+					HoursOperation: {
+						"-uhgzxc": {
+						    week: 1,
+						    date: "14-09-2015",
+							startTime: "09:00:00",
+							endTime: "17:00:00"
+						}
+					}
+				}
+			}
+        },
+        "-xaswee": {
+            role: "-asdewr",
+			firstName: "Julia",
+			lastName: "G.",
+            status: "-treqwv",
+            docType: "-ytrads",
+            docNum: 56734523,
+			email: "Julia@mail.c",
+			password: "87asd78asd876sa678d87",
+		    bornDate: "27-09-1971",
+		    gender: "-poiwer",
+		    maritalStatus: "-xcvasd",
+		    job: "-xirrui",
+		    lang: ["-cvbdsf"]
+        },
+        "-xaslkj": {
+            role: "-asdytr",
+            doctor: '-xasdsa',
+			firstName: "Natalia",
+			lastName: "P.",
+            status: "-treqwv",
+            docType: "-ytrads",
+            docNum: 9876657557,
+			email: "natp@mail.c",
+			password: "87asd78asd876sa678d87",
+		    gender: "-poiwer"
+        }
+    },
+    chat: {
+        "-ijnasd": {
+            to: "-xasdsa",
+            from: "-xaswee",
+            message: "Hola",
+            attachment: "file1.pdf",
+            timeProgress: "14:39",
+            datetime: "27-12-2015 13:00:00"
+        },
+        "-ijniuh": {
+            to: "-xasdsa",
+            from: "-xaswee",
+            message: "...",
+            attachment: "file2.pdf",
+            timeProgress: "14:39",
+            datetime: "27-12-2015 13:00:00"
+        },
+        "-ijnvbn": {
+            to: "-xaswee",
+            from: "-xasdsa",
+            message: "Hola",
+            attachment: "file3.pdf",
+            timeProgress: "14:39",
+            datetime: "27-12-2015 13:00:00"
+        }
+    },
+    schedules: {
+        "-xoiewr": {
+            office: "-xairti",
+            patient: "-xaswee",
+            parent: "mama",
+            office: "-xaiaoisd",
+            medicalEntity: "-xoroei",
+            carnet: "98ads879a78d",
+            subject: "dolor de cabeza",
+            date: "14-09-2015",
+            time: "10:30:00",
+            medio: "-xjhfgh"
+        },
+        "-xoierr": {
+            office: "-xairti",
+            patient: "-xaswee",
+            parent: "mama",
+            office: "-xaiaoisd",
+            medicalEntity: "-xoroei",
+            carnet: "98ads879a78d",
+            subject: "dolor de cabeza",
+            date: "14-09-2015",
+            time: "10:30:00",
+            medio: "-xjhfgh"
+        }
+    }
 }
