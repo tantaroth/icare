@@ -1,20 +1,83 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="appIcare">
     <head>
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
         <title>Title Test</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
     </head>
-    <body>
+    <body ng-controller="ctrlMaritalStatusses">
         <form id="form" method="post" accept-charset="utf-8">
             <fieldset>
                 <legend><span>Estado Civíl</span></legend>
                 <div>
-                    <label for="name">Nombre</label> <input type="text" name="name" id="name" placeholder="Nombre.." />
+                    <label for="name">Nombre</label> <input type="text" name="name" id="name" ng-model="newMaritalStatus.name" placeholder="Nombre.." />
                 </div>
-                <div>
-                    <button id="save" type="submit">Guardar</button>
+                <div ng-hide="edited">
+                    <button id="save" ng-click="add()" type="submit">Guardar</button>
+                </div>
+                <div ng-show="edited">
+                    <button id="save" ng-click="edit()" type="submit">Editar</button>
                 </div>
             </fieldset>
         </form>
+        <br>
+        <p>
+            <div>
+                <table width="100%" border="1">
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Acciones</th>
+                    </tr>
+                    <tr ng-repeat="(i, maritalStatus) in maritalStatusses">
+                        <td>{{ maritalStatus.name }}</td>
+                        <td>
+                            <a href="#" ng-click="view(i);">Editar</a>
+                            <a href="#" ng-click="remove(i);">Remover</a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </p>
+        <script>
+        var maritalStatusses;
+
+        angular.module("appIcare", [])
+            .controller("ctrlMaritalStatusses", function($scope) {
+                $scope.maritalStatusses = [];
+                $scope.newMaritalStatus = {};
+                $scope.edited = false;
+                $scope.id = false;
+
+                $scope.add = function() {
+                    console.log('asdas');
+                    $scope.newMaritalStatus = {
+                        name: $scope.newMaritalStatus.name
+                    };
+                    $scope.maritalStatusses.push($scope.newMaritalStatus);
+                    $scope.newMaritalStatus = {};
+                }
+
+                $scope.view = function(i){
+                    maritalStatusses = $scope.maritalStatusses[i];
+                    $scope.newMaritalStatus.name = maritalStatusses.name;
+                    $scope.id = i;
+                    $scope.edited = true;
+                }
+
+                $scope.edit = function(i){
+                    $scope.newMaritalStatus = {
+                        name: $scope.newMaritalStatus.name
+                    };
+                    $scope.maritalStatusses.splice($scope.id, 1, $scope.newMaritalStatus);
+                    $scope.newMaritalStatus = {};
+                    $scope.edited = false;
+                    $scope.id = false;
+                }
+
+                $scope.remove = function(i) {
+                    $scope.maritalStatusses.splice(i, 1);
+                }
+            });
+        </script>
     </body>
 </html>

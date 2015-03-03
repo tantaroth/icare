@@ -1,20 +1,83 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="appIcare">
     <head>
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
         <title>Title Test</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
     </head>
-    <body>
+    <body ng-controller="ctrlJobs">
         <form id="form" method="post" accept-charset="utf-8">
             <fieldset>
                 <legend><span>Labores</span></legend>
                 <div>
-                    <label for="name">Nombre</label> <input type="text" name="name" id="name" placeholder="Nombre.." />
+                    <label for="name">Nombre</label> <input type="text" name="name" id="name" ng-model="newJob.name" placeholder="Nombre.." />
                 </div>
-                <div>
-                    <button id="save" type="submit">Guardar</button>
+                <div ng-hide="edited">
+                    <button id="save" ng-click="add()" type="submit">Guardar</button>
+                </div>
+                <div ng-show="edited">
+                    <button id="save" ng-click="edit()" type="submit">Editar</button>
                 </div>
             </fieldset>
         </form>
+        <br>
+        <p>
+            <div>
+                <table width="100%" border="1">
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Acciones</th>
+                    </tr>
+                    <tr ng-repeat="(i, job) in jobs">
+                        <td>{{ job.name }}</td>
+                        <td>
+                            <a href="#" ng-click="view(i);">Editar</a>
+                            <a href="#" ng-click="remove(i);">Remover</a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </p>
+        <script>
+        var jobs;
+
+        angular.module("appIcare", [])
+            .controller("ctrlJobs", function($scope) {
+                $scope.jobs = [];
+                $scope.newJob = {};
+                $scope.edited = false;
+                $scope.id = false;
+
+                $scope.add = function() {
+                    console.log('asdas');
+                    $scope.newJob = {
+                        name: $scope.newJob.name
+                    };
+                    $scope.jobs.push($scope.newJob);
+                    $scope.newJob = {};
+                }
+
+                $scope.view = function(i){
+                    jobs = $scope.jobs[i];
+                    $scope.newJob.name = jobs.name;
+                    $scope.id = i;
+                    $scope.edited = true;
+                }
+
+                $scope.edit = function(i){
+                    $scope.newJob = {
+                        name: $scope.newJob.name
+                    };
+                    $scope.jobs.splice($scope.id, 1, $scope.newJob);
+                    $scope.newJob = {};
+                    $scope.edited = false;
+                    $scope.id = false;
+                }
+
+                $scope.remove = function(i) {
+                    $scope.jobs.splice(i, 1);
+                }
+            });
+        </script>
     </body>
 </html>

@@ -5,7 +5,7 @@
         <title>Title Test</title>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
     </head>
-    <body ng-controller="ctrlPatient">
+    <body ng-controller="ctrlDocTypes">
         <form id="form" method="post" accept-charset="utf-8">
             <fieldset>
                 <legend><span>Tipos de documento</span></legend>
@@ -42,7 +42,7 @@
         var docTypes;
 
         angular.module("appIcare", [])
-            .controller("ctrlPatient", function($scope) {
+            .controller("ctrlDocTypes", function($scope) {
                 $scope.docTypes = [];
                 $scope.newDocType = {};
                 $scope.edited = false;

@@ -1,15 +1,16 @@
 <!DOCTYPE html>
-<html ng-app="appPatients">
+<html ng-app="appIcare">
     <head>
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
         <title>Title Test</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
     </head>
-    <body>
+    <body ng-controller="ctrlPatients">
         <form id="form" method="post" accept-charset="utf-8">
             <fieldset>
                 <legend><span>Pacientes</span></legend>
                 <div>
-                    <label for="firstName">Nombre</label><br /><input type="text" name="firstName" id="firstName" placeholder="Nombre.." />
+                    <label for="firstName">Nombre</label><br /><input type="text" name="firstName" id="firstName" ng-model="newPatient.name" placeholder="Nombre.." />
                 </div>
                 <div>
                     <label for="lastName">Apellidos</label><br /><input type="text" name="lastName" id="lastName" placeholder="Apellidos.." />
@@ -59,8 +60,11 @@
                     </select>
                 </div>
                 <hr />
-                <div>
-                    <button id="save" type="submit">Guardar</button>
+                <div ng-hide="edited">
+                    <button id="save" ng-click="add()" type="submit">Guardar</button>
+                </div>
+                <div ng-show="edited">
+                    <button id="save" ng-click="edit()" type="submit">Editar</button>
                 </div>
             </fieldset>
         </form>
@@ -70,27 +74,58 @@
                 <table width="100%" border="1">
                     <tr>
                         <th>Nombre</th>
-                        <th>Apellidos</th>
-                        <th>Tipo de documento</th>
-                        <th>Número de documento</th>
-                        <th>Correo-E</th>
-                        <th>Género</th>
+                        <th>Acciones</th>
                     </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                    <tr ng-repeat="(i, patient) in patients">
+                        <td>{{ patient.name }}</td>
+                        <td>
+                            <a href="#" ng-click="view(i);">Editar</a>
+                            <a href="#" ng-click="remove(i);">Remover</a>
+                        </td>
                     </tr>
                 </table>
             </div>
         </p>
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
         <script>
-        Angular.module('appPatients', [])
-            .controller();
+        var patients;
+
+        angular.module("appIcare", [])
+            .controller("ctrlPatients", function($scope) {
+                $scope.patients = [];
+                $scope.newPatient = {};
+                $scope.edited = false;
+                $scope.id = false;
+
+                $scope.add = function() {
+                    console.log('asdas');
+                    $scope.newPatient = {
+                        name: $scope.newPatient.name
+                    };
+                    $scope.patients.push($scope.newPatient);
+                    $scope.newPatient = {};
+                }
+
+                $scope.view = function(i){
+                    patients = $scope.patients[i];
+                    $scope.newPatient.name = patients.name;
+                    $scope.id = i;
+                    $scope.edited = true;
+                }
+
+                $scope.edit = function(i){
+                    $scope.newPatient = {
+                        name: $scope.newPatient.name
+                    };
+                    $scope.patients.splice($scope.id, 1, $scope.newPatient);
+                    $scope.newPatient = {};
+                    $scope.edited = false;
+                    $scope.id = false;
+                }
+
+                $scope.remove = function(i) {
+                    $scope.patients.splice(i, 1);
+                }
+            });
         </script>
     </body>
 </html>
