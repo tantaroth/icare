@@ -2,18 +2,49 @@
     status: {
         "-treqwv": {
             name: "Activo"
+            status: 1
+        }
+    },
+    module: {
+        "-uygmnb": {
+            name: "citas",
+            path: "citas.html",
+            status: "-treqwv"
+        },
+        "-uygasd": {
+            name: "consutorios",
+            path: "consultorios.html",
+            status: "-treqwv"
+        }
     },
     role: {
         "-asdeeq": {
-            name: "Dr",
+            name: "Doctor",
+            modules: {
+                permissions: [
+                    ['-uygmnb', [1,1,1,1]],#[consultar,agregar,editar,remover]
+                    ['-uygasd', [1,1,1,1]],
+                ]
+            },
             status: "-treqwv"
         },
         "-asdewr": {
-            name: "Patient",
+            name: "Paciente",
+            modules: {
+                permissions: [
+                    ['-uygmnb', [1,0,0,0]],#[consultar,agregar,editar,remover]
+                ]
+            },
             status: "-treqwv"
         }
         "-asdytr": {
             name: "Recepcionista",
+            modules: {
+                permissions: [
+                    ['-uygmnb', [1,1,1,1]],#[consultar,agregar,editar,remover]
+                    ['-uygasd', [1,0,0,0]],
+                ]
+            },
             status: "-treqwv"
         }
     },
@@ -163,6 +194,7 @@
     },
     chat: {
         "-ijnasd": {
+            video: false,
             to: "-xasdsa",
             from: "-xaswee",
             message: "Hola",
@@ -171,6 +203,7 @@
             datetime: "27-12-2015 13:00:00"
         },
         "-ijniuh": {
+            video: false,
             to: "-xasdsa",
             from: "-xaswee",
             message: "...",
@@ -179,6 +212,7 @@
             datetime: "27-12-2015 13:00:00"
         },
         "-ijnvbn": {
+            video: false,
             to: "-xaswee",
             from: "-xasdsa",
             message: "Hola",
@@ -189,10 +223,9 @@
     },
     schedules: {
         "-xoiewr": {
-            office: "-xairti",
             patient: "-xaswee",
             parent: "mama",
-            office: "-xaiaoisd",
+            office: "-xairti",
             medicalEntity: "-xoroei",
             carnet: "98ads879a78d",
             subject: "dolor de cabeza",
@@ -201,10 +234,9 @@
             medio: "-xjhfgh"
         },
         "-xoierr": {
-            office: "-xairti",
             patient: "-xaswee",
             parent: "mama",
-            office: "-xaiaoisd",
+            office: "-xairti",
             medicalEntity: "-xoroei",
             carnet: "98ads879a78d",
             subject: "dolor de cabeza",

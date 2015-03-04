@@ -4,6 +4,8 @@
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
         <title>Title Test</title>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+        <script src="https://cdn.firebase.com/js/client/2.1.0/firebase.js"></script>
+        <script src="https://cdn.firebase.com/libs/angularfire/0.9.1/angularfire.min.js"></script>
     </head>
     <body ng-controller="ctrlGenders">
         <form id="form" method="post" accept-charset="utf-8">
@@ -28,56 +30,60 @@
                         <th>Nombre</th>
                         <th>Acciones</th>
                     </tr>
-                    <tr ng-repeat="(i, gender) in genders">
+                    <tr ng-repeat="gender in genders">
                         <td>{{ gender.name }}</td>
                         <td>
-                            <a href="#" ng-click="view(i);">Editar</a>
-                            <a href="#" ng-click="remove(i);">Remover</a>
+                            <a href="#" ng-click="view(gender.$id);">Editar</a>
+                            <a href="#" ng-click="remove(gender.$id);">Remover</a>
                         </td>
                     </tr>
                 </table>
             </div>
         </p>
         <script>
-        var genders;
+        var genders, gender;
 
-        angular.module("appIcare", [])
-            .controller("ctrlGenders", function($scope) {
-                $scope.genders = [];
-                $scope.newGender = {};
-                $scope.edited = false;
-                $scope.id = false;
+        angular.module("appIcare", ["firebase"])
+            .controller("ctrlGenders", ["$scope", "$firebase",
+                function($scope, $firebase) {
+                    var ref = new Firebase('https://icareapp.firebaseio.com/gender');
+                    var sync = $firebase(ref);
 
-                $scope.add = function() {
-                    console.log('asdas');
-                    $scope.newGender = {
-                        name: $scope.newGender.name
-                    };
-                    $scope.genders.push($scope.newGender);
-                    $scope.newGender = {};
-                }
-
-                $scope.view = function(i){
-                    genders = $scope.genders[i];
-                    $scope.newGender.name = genders.name;
-                    $scope.id = i;
-                    $scope.edited = true;
-                }
-
-                $scope.edit = function(i){
-                    $scope.newGender = {
-                        name: $scope.newGender.name
-                    };
-                    $scope.genders.splice($scope.id, 1, $scope.newGender);
+                    $scope.genders = sync.$asArray();
                     $scope.newGender = {};
                     $scope.edited = false;
                     $scope.id = false;
-                }
 
-                $scope.remove = function(i) {
-                    $scope.genders.splice(i, 1);
-                }
-            });
+                    $scope.add = function() {
+                        $scope.newGender = {
+                            name: $scope.newGender.name
+                        };
+                        sync.$push($scope.newGender);
+                        $scope.newGender = {};
+                    }
+
+                    $scope.view = function(id){
+                        genders = sync.$asArray();
+                        gender = genders.$getRecord(id);
+                        $scope.newGender.name = gender.name;
+                        $scope.id = id;
+                        $scope.edited = true;
+                    }
+
+                    $scope.edit = function(i){
+                        $scope.newGender = {
+                            name: $scope.newGender.name
+                        };
+                        sync.$update($scope.id, $scope.newGender);
+                        $scope.newGender = {};
+                        $scope.edited = false;
+                        $scope.id = false;
+                    }
+
+                    $scope.remove = function(id) {
+                        sync.$remove(id);
+                    }
+                }]);
         </script>
     </body>
 </html>

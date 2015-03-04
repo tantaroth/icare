@@ -2,18 +2,20 @@
 <html ng-app="appIcare">
     <head>
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-        <title>Title Test</title>
+        <title>Pacientes</title>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+        <script src="https://cdn.firebase.com/js/client/2.1.0/firebase.js"></script>
+        <script src="https://cdn.firebase.com/libs/angularfire/0.9.1/angularfire.min.js"></script>
     </head>
     <body ng-controller="ctrlPatients">
         <form id="form" method="post" accept-charset="utf-8">
             <fieldset>
                 <legend><span>Pacientes</span></legend>
                 <div>
-                    <label for="firstName">Nombre</label><br /><input type="text" name="firstName" id="firstName" ng-model="newPatient.name" placeholder="Nombre.." />
+                    <label for="firstName">Nombre</label><br /><input type="text" name="firstName" id="firstName" ng-model="newPatient.firstName" placeholder="Nombre.." />
                 </div>
                 <div>
-                    <label for="lastName">Apellidos</label><br /><input type="text" name="lastName" id="lastName" placeholder="Apellidos.." />
+                    <label for="lastName">Apellidos</label><br /><input type="text" name="lastName" id="lastName" ng-model="newPatient.lastName" placeholder="Apellidos.." />
                 </div>
                 <div>
                     <label for="documenType">Tipo de documento</label><br />
@@ -76,56 +78,60 @@
                         <th>Nombre</th>
                         <th>Acciones</th>
                     </tr>
-                    <tr ng-repeat="(i, patient) in patients">
+                    <tr ng-repeat="patient in patients">
                         <td>{{ patient.name }}</td>
                         <td>
-                            <a href="#" ng-click="view(i);">Editar</a>
-                            <a href="#" ng-click="remove(i);">Remover</a>
+                            <a href="#" ng-click="view(patient.$id);">Editar</a>
+                            <a href="#" ng-click="remove(patient.$id);">Remover</a>
                         </td>
                     </tr>
                 </table>
             </div>
         </p>
         <script>
-        var patients;
+        var patients, patient;
 
-        angular.module("appIcare", [])
-            .controller("ctrlPatients", function($scope) {
-                $scope.patients = [];
-                $scope.newPatient = {};
-                $scope.edited = false;
-                $scope.id = false;
+        angular.module("appIcare", ["firebase"])
+            .controller("ctrlPatients", ["$scope", "$firebase",
+                function($scope, $firebase) {
+                    var ref = new Firebase('https://icareapp.firebaseio.com/docType');
+                    var sync = $firebase(ref);
 
-                $scope.add = function() {
-                    console.log('asdas');
-                    $scope.newPatient = {
-                        name: $scope.newPatient.name
-                    };
-                    $scope.patients.push($scope.newPatient);
-                    $scope.newPatient = {};
-                }
-
-                $scope.view = function(i){
-                    patients = $scope.patients[i];
-                    $scope.newPatient.name = patients.name;
-                    $scope.id = i;
-                    $scope.edited = true;
-                }
-
-                $scope.edit = function(i){
-                    $scope.newPatient = {
-                        name: $scope.newPatient.name
-                    };
-                    $scope.patients.splice($scope.id, 1, $scope.newPatient);
+                    $scope.patients = [];
                     $scope.newPatient = {};
                     $scope.edited = false;
                     $scope.id = false;
-                }
 
-                $scope.remove = function(i) {
-                    $scope.patients.splice(i, 1);
-                }
-            });
+                    $scope.add = function() {
+                        console.log('asdas');
+                        $scope.newPatient = {
+                            name: $scope.newPatient.name
+                        };
+                        $scope.patients.push($scope.newPatient);
+                        $scope.newPatient = {};
+                    }
+
+                    $scope.view = function(i){
+                        patients = $scope.patients[i];
+                        $scope.newPatient.name = patients.name;
+                        $scope.id = i;
+                        $scope.edited = true;
+                    }
+
+                    $scope.edit = function(i){
+                        $scope.newPatient = {
+                            name: $scope.newPatient.name
+                        };
+                        $scope.patients.splice($scope.id, 1, $scope.newPatient);
+                        $scope.newPatient = {};
+                        $scope.edited = false;
+                        $scope.id = false;
+                    }
+
+                    $scope.remove = function(i) {
+                        $scope.patients.splice(i, 1);
+                    }
+                }]);
         </script>
     </body>
 </html>

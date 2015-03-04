@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html ng-app="appIcare">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>Estados</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+        <script src="https://cdn.firebase.com/js/client/2.1.0/firebase.js"></script>
+        <script src="https://cdn.firebase.com/libs/angularfire/0.9.1/angularfire.min.js"></script>
+    </head>
+    <body ng-controller="ctrlStatusses">
+        <form id="form" method="post" accept-charset="utf-8">
+            <fieldset>
+                <legend><span>Estados</span></legend>
+                <div>
+                    <label for="name">Nombre</label> <input type="text" name="name" id="name" ng-model="newStatus.name" placeholder="Nombre.." />
+                </div>
+                <div>
+                    <label for="status-active">Estado</label><br />
+                    <input type="radio" name="status" ng-model="newStatus.status" checked id="status-active" value=1 />
+                    <label for="status-active">Activo</label><br />
+                    <input type="radio" name="status" ng-model="newStatus.status" id="status-unactive" value=0 />
+                    <label for="status-unactive">Desactivo</label><br />
+                </div>
+                <div ng-hide="edited">
+                    <button id="save" ng-click="add()" type="submit">Guardar</button>
+                </div>
+                <div ng-show="edited">
+                    <button id="save" ng-click="edit()" type="submit">Editar</button>
+                </div>
+            </fieldset>
+        </form>
+        <br>
+        <p>
+            <div>
+                <table width="100%" border="1">
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                    <tr ng-repeat="status in statusses">
+                        <td>{{ status.name }}</td>
+                        <td>{{ status.status }}</td>
+                        <td>
+                            <a href="#" ng-click="view(status.$id);">Editar</a>
+                            <a href="#" ng-click="remove(status.$id);">Remover</a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </p>
+        <script>
+        var statusses, status;
+
+        angular.module("appIcare", ["firebase"])
+            .controller("ctrlStatusses", ["$scope", "$firebase",
+                function($scope, $firebase) {
+                    var ref = new Firebase('https://icareapp.firebaseio.com/status');
+                    var sync = $firebase(ref);
+
+                    $scope.statusses = sync.$asArray();
+                    $scope.newStatus = {
+                        name: '',
+                        status: 1
+                    };
+                    $scope.edited = false;
+                    $scope.id = false;
+
+                    $scope.add = function() {
+                        $scope.newStatus = {
+                            name: $scope.newStatus.name,
+                            status: $scope.newStatus.status
+                        };
+                        sync.$push($scope.newStatus);
+                        $scope.newStatus = {
+                            name: '',
+                            status: 1
+                        };
+                    }
+
+                    $scope.view = function(id){
+                        statusses = sync.$asArray();
+                        status = statusses.$getRecord(id);
+                        console.log(status);
+                        $scope.newStatus.name = status.name;
+                        $scope.newStatus.status = status.status;
+                        $scope.id = id;
+                        $scope.edited = true;
+                    }
+
+                    $scope.edit = function(i){
+                        $scope.newStatus = {
+                            name: $scope.newStatus.name,
+                            status: $scope.newStatus.status
+                        };
+                        sync.$update($scope.id, $scope.newStatus);
+                        $scope.newStatus = {
+                            name: '',
+                            status: 1
+                        };
+                        $scope.edited = false;
+                        $scope.id = false;
+                    }
+
+                    $scope.remove = function(id) {
+                        sync.$remove(id);
+                    }
+                }]);
+        </script>
+    </body>
+</html>
