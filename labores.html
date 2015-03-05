@@ -14,6 +14,15 @@
                 <div>
                     <label for="name">Nombre</label> <input type="text" name="name" id="name" ng-model="newJob.name" placeholder="Nombre.." />
                 </div>
+                <div>
+                    <label>
+                        Estado <br />
+                    </label>
+                    <label ng-repeat="status in statuses" for="status-{{ status.$id }}" ng-if="status.status == 1">
+                        <input type="radio" name="status" ng-model="newJob.status" id="status-{{ status.$id }}" value="{{ status }}" />
+                        {{ status.name }} <br />
+                    </label>
+                </div>
                 <div ng-hide="edited">
                     <button id="save" ng-click="add()" type="submit">Guardar</button>
                 </div>
@@ -28,10 +37,12 @@
                 <table width="100%" border="1">
                     <tr>
                         <th>Nombre</th>
+                        <th>Estado</th>
                         <th>Acciones</th>
                     </tr>
                     <tr ng-repeat="job in jobs">
                         <td>{{ job.name }}</td>
+                        <td>{{ job.status }}</td>
                         <td>
                             <a href="#" ng-click="view(job.$id);">Editar</a>
                             <a href="#" ng-click="remove(job.$id);">Remover</a>
@@ -49,14 +60,20 @@
                     var ref = new Firebase('https://icareapp.firebaseio.com/job');
                     var sync = $firebase(ref);
 
+                    var refStatuses = new Firebase('https://icareapp.firebaseio.com/status');
+                    var syncStatuses = $firebase(refStatuses);
+
                     $scope.jobs = sync.$asArray();
+                    $scope.statuses = syncStatuses.$asArray();
+
                     $scope.newJob = {};
                     $scope.edited = false;
                     $scope.id = false;
 
                     $scope.add = function() {
                         $scope.newJob = {
-                            name: $scope.newJob.name
+                            name: $scope.newJob.name,
+                            status: $scope.newJob.status
                         };
                         sync.$push($scope.newJob);
                         $scope.newJob = {};
@@ -66,13 +83,15 @@
                         jobs = sync.$asArray();
                         job = jobs.$getRecord(id);
                         $scope.newJob.name = job.name;
+                        $scope.newJob.status = job.status;
                         $scope.id = id;
                         $scope.edited = true;
                     }
 
                     $scope.edit = function(i){
                         $scope.newJob = {
-                            name: $scope.newJob.name
+                            name: $scope.newJob.name,
+                            status: $scope.newJob.status
                         };
                         sync.$update($scope.id, $scope.newJob);
                         $scope.newJob = {};

@@ -106,23 +106,28 @@
     },
 	medio: {
 		"-xjhfgh": {
-			name: "virtual"
+			name: "virtual",
+            status: "-treqwv"
 		},
 		"-xjhfsa": {
-			name: "Presencial"
+			name: "Presencial",
+            status: "-treqwv"
 		}
 	},
 	medicalEntity: {
 		"-xoroei": {
-			name: "Salud Total"
+			name: "Salud Total",
+            status: "-treqwv"
 		}
 	},
 	job: {
 		"-xirrui": {
-			name: "Empleado/a"
+			name: "Empleado/a",
+            status: "-treqwv"
 		},
 		"-xriirr": {
-			name: "Desempleado/a"
+			name: "Desempleado/a",
+            status: "-treqwv"
 		}
 	},
     user:{
