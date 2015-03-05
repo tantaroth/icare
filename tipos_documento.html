@@ -12,7 +12,19 @@
             <fieldset>
                 <legend><span>Tipos de documento</span></legend>
                 <div>
+                    <label for="abbr">Abrv.</label> <input type="text" name="abbr" id="abbr" ng-model="newDocType.abbr" placeholder="Abreviación.." />
+                </div>
+                <div>
                     <label for="name">Nombre</label> <input type="text" name="name" id="name" ng-model="newDocType.name" placeholder="Nombre.." />
+                </div>
+                <div>
+                    <label>
+                        Estado <br />
+                    </label>
+                    <label ng-repeat="status in statuses" for="status-{{ status.$id }}" ng-if="status.status == 1">
+                        <input type="radio" name="status" ng-model="newDocType.status" id="status-{{ status.$id }}" value="{{ status.$id }}" />
+                        {{ status.name }} <br />
+                    </label>
                 </div>
                 <div ng-hide="edited">
                     <button id="save" ng-click="add()" type="submit">Guardar</button>
@@ -27,11 +39,15 @@
             <div>
                 <table width="100%" border="1">
                     <tr>
+                        <th>Abbr</th>
                         <th>Nombre</th>
+                        <th>Estado</th>
                         <th>Acciones</th>
                     </tr>
                     <tr ng-repeat="docType in docTypes">
+                        <td>{{ docType.abbr }}</td>
                         <td>{{ docType.name }}</td>
+                        <td>{{ getStatus(docType.status).name }}</td>
                         <td>
                             <a href="#" ng-click="view(docType.$id);">Editar</a>
                             <a href="#" ng-click="remove(docType.$id);">Remover</a>
@@ -49,14 +65,27 @@
                     var ref = new Firebase('https://icareapp.firebaseio.com/docType');
                     var sync = $firebase(ref);
 
+                    var refStatuses = new Firebase('https://icareapp.firebaseio.com/status');
+                    var syncStatuses = $firebase(refStatuses);
+
                     $scope.docTypes = sync.$asArray();
+                    $scope.statuses = syncStatuses.$asArray();
+
                     $scope.newDocType = {};
                     $scope.edited = false;
                     $scope.id = false;
 
+                    $scope.getStatus = function(id) {
+                        if($scope.statuses.$getRecord(id)) {
+                            return $scope.statuses.$getRecord(id);
+                        }
+                    }
+
                     $scope.add = function() {
                         $scope.newDocType = {
-                            name: $scope.newDocType.name
+                            abbr: $scope.newDocType.abbr,
+                            name: $scope.newDocType.name,
+                            status: $scope.newDocType.status
                         };
 
                         sync.$push($scope.newDocType);
@@ -66,14 +95,19 @@
                     $scope.view = function(id){
                         docTypes = sync.$asArray();
                         docType = docTypes.$getRecord(id);
+
+                        $scope.newDocType.abbr = docType.abbr;
                         $scope.newDocType.name = docType.name;
+                        $scope.newDocType.status = docType.status;
                         $scope.id = id;
                         $scope.edited = true;
                     }
 
                     $scope.edit = function(){
                         $scope.newDocType = {
-                            name: $scope.newDocType.name
+                            abbr: $scope.newDocType.abbr,
+                            name: $scope.newDocType.name,
+                            status: $scope.newDocType.status
                         };
                         sync.$update($scope.id, $scope.newDocType);
                         $scope.newDocType = {};

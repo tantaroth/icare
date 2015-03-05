@@ -19,7 +19,7 @@
                         Estado <br />
                     </label>
                     <label ng-repeat="status in statuses" for="status-{{ status.$id }}" ng-if="status.status == 1">
-                        <input type="radio" name="status" ng-model="newJob.status" id="status-{{ status.$id }}" value="{{ status }}" />
+                        <input type="radio" name="status" ng-model="newJob.status" id="status-{{ status.$id }}" value="{{ status.$id }}" />
                         {{ status.name }} <br />
                     </label>
                 </div>
@@ -42,7 +42,7 @@
                     </tr>
                     <tr ng-repeat="job in jobs">
                         <td>{{ job.name }}</td>
-                        <td>{{ job.status }}</td>
+                        <td>{{ getStatus(job.status).name }}</td>
                         <td>
                             <a href="#" ng-click="view(job.$id);">Editar</a>
                             <a href="#" ng-click="remove(job.$id);">Remover</a>
@@ -69,6 +69,12 @@
                     $scope.newJob = {};
                     $scope.edited = false;
                     $scope.id = false;
+
+                    $scope.getStatus = function(id) {
+                        if($scope.statuses.$getRecord(id)) {
+                            return $scope.statuses.$getRecord(id);
+                        }
+                    }
 
                     $scope.add = function() {
                         $scope.newJob = {

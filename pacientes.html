@@ -19,8 +19,8 @@
                 </div>
                 <div>
                     <label for="documenType">Tipo de documento</label><br />
-                    <select name="documenType" id="documenType">
-                        <option value="-xrietouer">C.C.</option>
+                    <select name="documenType" id="documenType" ng-repeat="docType in docTypes" ng-model="newPatient.documenType">
+                        <option value="{{ docType.$id }}">{{ docType.name }}</option>
                     </select>
                 </div>
                 <div>
@@ -75,11 +75,11 @@
             <div>
                 <table width="100%" border="1">
                     <tr>
-                        <th>Nombre</th>
+                        <th>Nombres</th>
                         <th>Acciones</th>
                     </tr>
                     <tr ng-repeat="patient in patients">
-                        <td>{{ patient.name }}</td>
+                        <td>{{ patient.firstname }}</td>
                         <td>
                             <a href="#" ng-click="view(patient.$id);">Editar</a>
                             <a href="#" ng-click="remove(patient.$id);">Remover</a>
@@ -92,44 +92,60 @@
         var patients, patient;
 
         angular.module("appIcare", ["firebase"])
-            .controller("ctrlPatients", ["$scope", "$firebase",
+            .controller("ctrlpatients", ["$scope", "$firebase",
                 function($scope, $firebase) {
-                    var ref = new Firebase('https://icareapp.firebaseio.com/docType');
+                    var ref = new Firebase('https://icareapp.firebaseio.com/patient');
                     var sync = $firebase(ref);
 
-                    $scope.patients = [];
+                    var refDocTypes = new Firebase('https://icareapp.firebaseio.com/docType');
+                    var syncDocTypes = $firebase(refDocTypes);
+                    var refStatuses = new Firebase('https://icareapp.firebaseio.com/status');
+                    var syncStatuses = $firebase(refStatuses);
+
+                    $scope.patients = sync.$asArray();
+                    $scope.docTypes = syncDocTypes.$asArray();
+
                     $scope.newPatient = {};
                     $scope.edited = false;
                     $scope.id = false;
 
+                    $scope.getStatus = function(id) {
+                        if($scope.statuses.$getRecord(id)) {
+                            return $scope.statuses.$getRecord(id);
+                        }
+                    }
+
                     $scope.add = function() {
-                        console.log('asdas');
                         $scope.newPatient = {
-                            name: $scope.newPatient.name
+                            name: $scope.newPatient.name,
+                            status: $scope.newPatient.status
                         };
-                        $scope.patients.push($scope.newPatient);
+                        sync.$push($scope.newPatient);
                         $scope.newPatient = {};
                     }
 
-                    $scope.view = function(i){
-                        patients = $scope.patients[i];
-                        $scope.newPatient.name = patients.name;
-                        $scope.id = i;
+                    $scope.view = function(id){
+                        patients = sync.$asArray();
+                        patient = patients.$getRecord(id);
+                        $scope.newPatient.name = patient.name;
+                        $scope.newPatient.status = patient.status;
+                        $scope.id = id;
                         $scope.edited = true;
                     }
 
                     $scope.edit = function(i){
                         $scope.newPatient = {
-                            name: $scope.newPatient.name
+                            name: $scope.newPatient.name,
+                            status: $scope.newPatient.status
                         };
-                        $scope.patients.splice($scope.id, 1, $scope.newPatient);
+                        sync.$update($scope.id, $scope.newPatient);
                         $scope.newPatient = {};
                         $scope.edited = false;
                         $scope.id = false;
                     }
 
-                    $scope.remove = function(i) {
-                        $scope.patients.splice(i, 1);
+                    $scope.remove = function(id) {
+                        sync.$remove(id);
                     }
                 }]);
         </script>

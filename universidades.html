@@ -1,20 +1,114 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="appIcare">
     <head>
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-        <title>Title Test</title>
+        <title>Universidades</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+        <script src="https://cdn.firebase.com/js/client/2.1.0/firebase.js"></script>
+        <script src="https://cdn.firebase.com/libs/angularfire/0.9.1/angularfire.min.js"></script>
     </head>
-    <body>
+    <body ng-controller="ctrlUniversities">
         <form id="form" method="post" accept-charset="utf-8">
             <fieldset>
                 <legend><span>Universidades</span></legend>
                 <div>
-                    <label for="name">Nombre</label> <input type="text" name="name" id="name" placeholder="Nombre.." />
+                    <label for="name">Nombre</label> <input type="text" name="name" id="name" ng-model="newUniversity.name" placeholder="Nombre.." />
                 </div>
                 <div>
-                    <button id="save" type="submit">Guardar</button>
+                    <label>
+                        Estado <br />
+                    </label>
+                    <label ng-repeat="status in statuses" for="status-{{ status.$id }}" ng-if="status.status == 1">
+                        <input type="radio" name="status" ng-model="newUniversity.status" id="status-{{ status.$id }}" value="{{ status.$id }}" />
+                        {{ status.name }} <br />
+                    </label>
+                </div>
+                <div ng-hide="edited">
+                    <button id="save" ng-click="add()" type="submit">Guardar</button>
+                </div>
+                <div ng-show="edited">
+                    <button id="save" ng-click="edit()" type="submit">Editar</button>
                 </div>
             </fieldset>
         </form>
+        <br>
+        <p>
+            <div>
+                <table width="100%" border="1">
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                    <tr ng-repeat="university in universities">
+                        <td>{{ university.name }}</td>
+                        <td>{{ getStatus(university.status).name }}</td>
+                        <td>
+                            <a href="#" ng-click="view(university.$id);">Editar</a>
+                            <a href="#" ng-click="remove(university.$id);">Remover</a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </p>
+        <script>
+        var universities, university;
+
+        angular.module("appIcare", ["firebase"])
+            .controller("ctrlUniversities", ["$scope", "$firebase",
+                function($scope, $firebase) {
+                    var ref = new Firebase('https://icareapp.firebaseio.com/university');
+                    var sync = $firebase(ref);
+
+                    var refStatuses = new Firebase('https://icareapp.firebaseio.com/status');
+                    var syncStatuses = $firebase(refStatuses);
+
+                    $scope.universities = sync.$asArray();
+                    $scope.statuses = syncStatuses.$asArray();
+
+                    $scope.newUniversity = {};
+                    $scope.edited = false;
+                    $scope.id = false;
+
+                    $scope.getStatus = function(id) {
+                        if($scope.statuses.$getRecord(id)) {
+                            return $scope.statuses.$getRecord(id);
+                        }
+                    }
+
+                    $scope.add = function() {
+                        $scope.newUniversity = {
+                            name: $scope.newUniversity.name,
+                            status: $scope.newUniversity.status
+                        };
+                        sync.$push($scope.newUniversity);
+                        $scope.newUniversity = {};
+                    }
+
+                    $scope.view = function(id){
+                        universities = sync.$asArray();
+                        university = universities.$getRecord(id);
+                        $scope.newUniversity.name = university.name;
+                        $scope.newUniversity.status = university.status;
+                        $scope.id = id;
+                        $scope.edited = true;
+                    }
+
+                    $scope.edit = function(i){
+                        $scope.newUniversity = {
+                            name: $scope.newUniversity.name,
+                            status: $scope.newUniversity.status
+                        };
+                        sync.$update($scope.id, $scope.newUniversity);
+                        $scope.newUniversity = {};
+                        $scope.edited = false;
+                        $scope.id = false;
+                    }
+
+                    $scope.remove = function(id) {
+                        sync.$remove(id);
+                    }
+                }]);
+        </script>
     </body>
 </html>

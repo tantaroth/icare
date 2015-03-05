@@ -12,7 +12,7 @@
             <fieldset>
                 <legend><span>Estados</span></legend>
                 <div>
-                    <label for="name">Abrv.</label> <input type="text" name="abbr" id="abbr" ng-model="newStatus.abbr" placeholder="Abreviación.." />
+                    <label for="abbr">Abrv.</label> <input type="text" name="abbr" id="abbr" ng-model="newStatus.abbr" placeholder="Abreviación.." />
                 </div>
                 <div>
                     <label for="name">Nombre</label> <input type="text" name="name" id="name" ng-model="newStatus.name" placeholder="Nombre.." />
@@ -96,6 +96,7 @@
                         statuses = sync.$asArray();
                         getStatus = statuses.$getRecord(id);
 
+                        $scope.newStatus.abbr = getStatus.abbr;
                         $scope.newStatus.name = getStatus.name;
                         $scope.newStatus.status = getStatus.status;
                         $scope.id = id;

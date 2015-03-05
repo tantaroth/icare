@@ -1,20 +1,114 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="appIcare">
     <head>
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-        <title>Title Test</title>
+        <title>Idiomas</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+        <script src="https://cdn.firebase.com/js/client/2.1.0/firebase.js"></script>
+        <script src="https://cdn.firebase.com/libs/angularfire/0.9.1/angularfire.min.js"></script>
     </head>
-    <body>
+    <body ng-controller="ctrlLangs">
         <form id="form" method="post" accept-charset="utf-8">
             <fieldset>
                 <legend><span>Idiomas</span></legend>
                 <div>
-                    <label for="name">Nombre</label> <input type="text" name="name" id="name" placeholder="Nombre.." />
+                    <label for="name">Nombre</label> <input type="text" name="name" id="name" ng-model="newLang.name" placeholder="Nombre.." />
                 </div>
                 <div>
-                    <button id="save" type="submit">Guarda</button>
+                    <label>
+                        Estado <br />
+                    </label>
+                    <label ng-repeat="status in statuses" for="status-{{ status.$id }}" ng-if="status.status == 1">
+                        <input type="radio" name="status" ng-model="newLang.status" id="status-{{ status.$id }}" value="{{ status.$id }}" />
+                        {{ status.name }} <br />
+                    </label>
+                </div>
+                <div ng-hide="edited">
+                    <button id="save" ng-click="add()" type="submit">Guardar</button>
+                </div>
+                <div ng-show="edited">
+                    <button id="save" ng-click="edit()" type="submit">Editar</button>
                 </div>
             </fieldset>
         </form>
+        <br>
+        <p>
+            <div>
+                <table width="100%" border="1">
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                    <tr ng-repeat="lang in langs">
+                        <td>{{ lang.name }}</td>
+                        <td>{{ getStatus(lang.status).name }}</td>
+                        <td>
+                            <a href="#" ng-click="view(lang.$id);">Editar</a>
+                            <a href="#" ng-click="remove(lang.$id);">Remover</a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </p>
+        <script>
+        var langs, lang;
+
+        angular.module("appIcare", ["firebase"])
+            .controller("ctrlLangs", ["$scope", "$firebase",
+                function($scope, $firebase) {
+                    var ref = new Firebase('https://icareapp.firebaseio.com/lang');
+                    var sync = $firebase(ref);
+
+                    var refStatuses = new Firebase('https://icareapp.firebaseio.com/status');
+                    var syncStatuses = $firebase(refStatuses);
+
+                    $scope.langs = sync.$asArray();
+                    $scope.statuses = syncStatuses.$asArray();
+
+                    $scope.newLang = {};
+                    $scope.edited = false;
+                    $scope.id = false;
+
+                    $scope.getStatus = function(id) {
+                        if($scope.statuses.$getRecord(id)) {
+                            return $scope.statuses.$getRecord(id);
+                        }
+                    }
+
+                    $scope.add = function() {
+                        $scope.newLang = {
+                            name: $scope.newLang.name,
+                            status: $scope.newLang.status
+                        };
+                        sync.$push($scope.newLang);
+                        $scope.newLang = {};
+                    }
+
+                    $scope.view = function(id){
+                        langs = sync.$asArray();
+                        lang = langs.$getRecord(id);
+                        $scope.newLang.name = lang.name;
+                        $scope.newLang.status = lang.status;
+                        $scope.id = id;
+                        $scope.edited = true;
+                    }
+
+                    $scope.edit = function(i){
+                        $scope.newLang = {
+                            name: $scope.newLang.name,
+                            status: $scope.newLang.status
+                        };
+                        sync.$update($scope.id, $scope.newLang);
+                        $scope.newLang = {};
+                        $scope.edited = false;
+                        $scope.id = false;
+                    }
+
+                    $scope.remove = function(id) {
+                        sync.$remove(id);
+                    }
+                }]);
+        </script>
     </body>
 </html>
